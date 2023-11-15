@@ -5,7 +5,8 @@ def serve_customer(env, customer, server):
     """Process to serve a customer."""
     with server.request() as request:
         yield request
-        customer.wait_time = env.now - customer.start_service_time
+        customer.start_service_time = env.now  # Set start service time here
+        customer.wait_time = env.now - customer.arrival_time
         print(f"{env.now}: Customer {customer.name} starts service.")
         yield env.timeout(customer.service_time)
         customer.service_end_time = env.now

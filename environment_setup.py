@@ -17,9 +17,9 @@ class Customer:
 
     def calculate_satisfaction(self):
         max_satisfaction = 10
-        normal_decay_rate = 0.01  # Decay rate for wait times up to threshold_wait_time seconds
-        increased_decay_rate = 0.1  # Steeper decay rate for wait times beyond threshold_wait_time seconds
-        threshold_wait_time = 120  # Threshold in seconds
+        normal_decay_rate = 0.001  # Decay rate for wait times up to threshold_wait_time seconds
+        increased_decay_rate = 0.005  # Steeper decay rate for wait times beyond threshold_wait_time seconds
+        threshold_wait_time = 240  # Threshold in seconds
 
         if self.wait_time <= threshold_wait_time:
             # Apply normal decay rate for wait time up to threshold_wait_time seconds

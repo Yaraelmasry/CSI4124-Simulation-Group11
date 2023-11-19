@@ -2,13 +2,12 @@ import sys
 import matplotlib.pyplot as plt
 import environment_setup
 import service_queue_management
-import data_collection
 import simpy
 import numpy as np
 
 def get_simulation_parameters():
     """Function to get user inputs for simulation parameters."""
-    num_customers = int(input("Enter the number of customers: "))
+    num_customers = int(input("Enter the number of customers to queue: "))
     num_servers = int(input("Enter the number of servers: "))
     return num_customers, num_servers
 

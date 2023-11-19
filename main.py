@@ -8,7 +8,7 @@ import numpy as np
 def get_simulation_parameters():
     """Function to get user inputs for simulation parameters."""
     num_customers = int(input("Enter the number of customers to queue: "))
-    num_servers = int(input("Enter the number of servers: "))
+    num_servers = int(input("Enter the number of employees: "))
     return num_customers, num_servers
 
 def run_simulation(env_setup, service_mgmt, num_customers, num_servers):

@@ -1,5 +1,6 @@
 import simpy
 import random
+import numpy as np
 
 class Customer:
     def __init__(self, env, name, arrival_time, service_time):
@@ -11,6 +12,26 @@ class Customer:
         self.wait_time = None  # Time the customer spends waiting in the queue
         self.service_end_time = None  # Time at which the service for the customer is completed
         self.satisfaction = None  # Level of customer satisfaction (can be calculated later)
+        self.service_cost = None #cost of providing customer
+        self.dissatisfaction_cost = None #cost duue to customer dissatisfaction
+
+    def calculate_satisfaction(self):
+        max_satisfaction = 10
+        normal_decay_rate = 0.01  # Decay rate for wait times up to threshold_wait_time seconds
+        increased_decay_rate = 0.1  # Steeper decay rate for wait times beyond threshold_wait_time seconds
+        threshold_wait_time = 120  # Threshold in seconds
+
+        if self.wait_time <= threshold_wait_time:
+            # Apply normal decay rate for wait time up to threshold_wait_time seconds
+            self.satisfaction = max_satisfaction * np.exp(-normal_decay_rate * self.wait_time)
+        else:
+            # Calculate satisfaction at threshold_wait_time seconds
+            satisfaction_at_threshold = max_satisfaction * np.exp(-normal_decay_rate * threshold_wait_time)
+            # Apply increased decay rate beyond threshold_wait_time seconds
+            additional_wait_time = self.wait_time - threshold_wait_time
+            self.satisfaction = satisfaction_at_threshold * np.exp(-increased_decay_rate * additional_wait_time)
+
+        self.satisfaction = min(self.satisfaction, max_satisfaction)
 
 def customer_arrival(env, customer):
     # Simulate customer arrival
@@ -53,6 +74,5 @@ def generate_customers(env, num_customers):
         customers.append(Customer(env, f"{i + 1}", arrival_time, service_time))
     return customers
 
-if __name__ == "__main__":
-    # Start the simulation
-    simulate_queuing_system()
+
+
